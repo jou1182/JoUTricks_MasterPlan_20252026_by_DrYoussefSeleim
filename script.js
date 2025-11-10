@@ -1,146 +1,178 @@
-// === JoUTricks Dashboard Script (Final v1.0) ===
+/* === JoUTricks Dashboard Script — Final v1.1 ===
+ * يعمل مع VS Code Live Server أو أي خادم محلي/استضافة ثابتة.
+ * وظائف أساسية:
+ *  - تحميل progress_data.json وتحديث الحالة والأشرطة.
+ *  - عد تنازلي للحلقة القادمة.
+ *  - تبديل الوضع (داكن/فاتح) مع حفظ الاختيار.
+ *  - صوت نقر للأزرار والبطاقات.
+ *  - أزرار: Refresh / Add New Episode / Update Dashboard / Export JSON.
+ */
 
-// =============== إعداد الصوتيات ===============
+// =============== الصوتيات ===============
 const clickSound = document.getElementById('clickSound');
-function playClick() {
-  if (localStorage.getItem('sound') !== 'off') clickSound.play();
-}
+function playClick(){ try{ if(localStorage.getItem('sound')!=='off') clickSound.play(); }catch(e){} }
+
+// =============== عناصر DOM ===============
+const barsWrap   = document.getElementById('bars');
+const epTitleEl  = document.getElementById('epTitle');
+const epStatusEl = document.getElementById('epStatus');
+const epFolderEl = document.getElementById('epFolder');
+const countdownEl= document.getElementById('countdown');
+const themeBtn   = document.getElementById('themeToggle');
+const nextDateInp= document.getElementById('nextDate');
+
+// =============== حالة الواجهة ===============
+let progressData = null;
 
 // =============== تحميل بيانات التقدم ===============
-function loadProgressData() {
-  fetch('progress_data.json')
-    .then(res => res.json())
-    .then(data => {
-      // تحديث أشرطة المواسم
-      const bars = document.getElementById('bars');
-      bars.innerHTML = '';
-      data.seasons.forEach(s => {
-        const bar = document.createElement('div');
-        bar.style.width = s.progress + '%';
-        bar.textContent = `${s.name} — ${s.progress}%`;
-        bar.style.background =
-          'linear-gradient(90deg, #CD980E, #FFD56B)';
-        bars.appendChild(bar);
-      });
+async function loadProgressData(){
+  try{
+    const res = await fetch('progress_data.json', {cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    progressData = await res.json();
 
-      // تحديث بيانات الحلقة القادمة
-      document.getElementById('epTitle').textContent =
-        data.nextEpisode.title;
-      document.getElementById('epStatus').textContent =
-        data.nextEpisode.status;
-      document.getElementById('epFolder').href =
-        data.nextEpisode.folderURL;
-      localStorage.setItem('nextEpisodeDate', data.nextEpisode.date);
-
-      // تحديث العد التنازلي
-      updateCountdown();
-    })
-    .catch(err => {
-      console.error('❌ Error loading progress_data.json:', err);
-      alert('⚠️ لم يتم العثور على ملف progress_data.json أو به خطأ.');
+    // Project Status bars
+    barsWrap.innerHTML = '';
+    (progressData.seasons || []).forEach(s=>{
+      // صف مستقل لكل موسم: عنوان + شريط
+      const row   = document.createElement('div'); row.className='progress-row';
+      const label = document.createElement('div'); label.className='progress-label';
+      label.textContent = `${s.name} — ${s.progress}%`;
+      const bar   = document.createElement('div'); bar.className='progress-bar';
+      // نحدّث بعد إضافة العناصر حتى يظهر الانتقال
+      requestAnimationFrame(()=>{ bar.style.width = (Number(s.progress)||0) + '%'; });
+      row.appendChild(label); row.appendChild(bar);
+      barsWrap.appendChild(row);
     });
+
+    // Next Episode details
+    const next = progressData.nextEpisode || {};
+    epTitleEl.textContent  = next.title || '—';
+    epStatusEl.textContent = next.status || 'Pending';
+    epFolderEl.href        = next.folderURL || '#';
+    // تاريخ العدّاد
+    if(next.date) localStorage.setItem('nextEpisodeDate', next.date);
+    if(nextDateInp) nextDateInp.value = (next.date || '').slice(0,10);
+
+    updateCountdown(); // بعد تحميل التاريخ
+  }catch(err){
+    console.error('Error loading progress_data.json:', err);
+    alert('⚠️ لم يتم العثور على ملف progress_data.json أو به خطأ في الصيغة.');
+  }
 }
 
 // =============== العدّاد الزمني ===============
-function updateCountdown() {
-  const countdown = document.getElementById('countdown');
-  const nextDate = new Date(
-    localStorage.getItem('nextEpisodeDate') || '2025-11-10'
-  );
-  const now = new Date();
-  const diff = nextDate - now;
+function updateCountdown(){
+  const target = new Date(localStorage.getItem('nextEpisodeDate') || '2025-11-10');
+  const now    = new Date();
+  const diff   = target - now;
 
-  if (diff <= 0) {
-    countdown.textContent = '🎉 It’s Episode Day!';
-    countdown.style.color = '#28A745';
+  if(isNaN(target.getTime())){
+    countdownEl.textContent = '⏰ التاريخ غير مضبوط.';
+    countdownEl.style.color = '';
     return;
   }
 
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff % 86400000) / 3600000);
-  const mins = Math.floor((diff % 3600000) / 60000);
-  countdown.textContent = `⏰ ${days}d ${hours}h ${mins}m remaining`;
+  if(diff<=0){
+    countdownEl.textContent = '🎉 It’s Episode Day!';
+    countdownEl.style.color = '#28A745';
+    return;
+  }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor(diff/3600000)%24;
+  const m = Math.floor(diff/60000)%60;
+  countdownEl.textContent = `⏰ ${d}d ${h}h ${m}m remaining`;
+  countdownEl.style.color = '';
 }
 setInterval(updateCountdown, 60000);
 
-// =============== تبديل المظهر الليلي / الفاتح ===============
-const themeToggle = document.getElementById('themeToggle');
-themeToggle.addEventListener('click', () => {
+// =============== تبديل المظهر ===============
+themeBtn.addEventListener('click', ()=>{
   document.body.classList.toggle('light');
-  const current = document.body.classList.contains('light')
-    ? 'light'
-    : 'dark';
-  localStorage.setItem('theme', current);
+  localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark');
   playClick();
 });
-if (localStorage.getItem('theme') === 'light')
-  document.body.classList.add('light');
+if(localStorage.getItem('theme')==='light'){ document.body.classList.add('light'); }
 
-// =============== الأزرار الرئيسية ===============
-
-// 🔄 تحديث الصفحة
-document.getElementById('refresh').addEventListener('click', () => {
-  playClick();
-  location.reload();
-});
-
-// 🆕 إضافة حلقة جديدة
-document.getElementById('addEp').addEventListener('click', () => {
-  playClick();
-  const epName = prompt('🆕 أدخل اسم الحلقة الجديدة:');
-  if (epName) {
-    alert(`✅ تم تسجيل الحلقة الجديدة: ${epName}\n(يُرجى إضافتها لاحقًا في Excel).`);
-  }
-});
-
-// 📈 تحديث Dashboard (فتح Google Sheets)
-document.getElementById('updDash').addEventListener('click', () => {
-  playClick();
-  window.open(
-    'https://docs.google.com/spreadsheets/',
-    '_blank'
-  );
-});
-
-// 📤 تصدير ملف progress_data.json محدث
-document.getElementById('expJSON').addEventListener('click', () => {
-  playClick();
-
-  const bars = document.querySelectorAll('#bars div');
-  const seasons = [];
-  bars.forEach(b => {
-    const [name, pct] = b.textContent.split(' — ');
-    seasons.push({ name: name.trim(), progress: parseInt(pct) });
+// =============== مزامنة تاريخ الحلقة القادمة ===============
+if(nextDateInp){
+  nextDateInp.addEventListener('change', e=>{
+    const val = e.target.value;
+    if(val){ localStorage.setItem('nextEpisodeDate', val); updateCountdown(); playClick(); }
   });
+}
+
+// =============== وظائف الأزرار الرئيسية ===============
+
+// Refresh Progress — إعادة تحميل الصفحة كاملة (يقرأ JSON من جديد)
+document.getElementById('refresh').addEventListener('click', ()=>{
+  playClick(); location.reload();
+});
+
+// Add New Episode — نموذج بسيط (تجميعي) لإضافة عنوان فقط (قابل للتطوير)
+document.getElementById('addEp').addEventListener('click', ()=>{
+  playClick();
+  const ep = prompt('🆕 أدخل اسم الحلقة الجديدة:');
+  if(ep){ alert(`✅ تم تسجيل الحلقة: ${ep}\n(أضفها لاحقًا في ملف Excel/Sheets.)`); }
+});
+
+// Update Dashboard — افتح Google Sheets (ضع الرابط الحقيقي لاحقًا)
+document.getElementById('updDash').addEventListener('click', ()=>{
+  playClick();
+  window.open('https://docs.google.com/spreadsheets/', '_blank');
+});
+
+// Export Progress JSON — يصدر نسخة محدثة من البيانات المعروضة
+document.getElementById('expJSON').addEventListener('click', ()=>{
+  playClick();
+
+  // إن لم تُحمّل البيانات (لا قدر الله)، نحاول بناءها من DOM
+  let seasonsOut = [];
+  if(progressData && Array.isArray(progressData.seasons)){
+    seasonsOut = progressData.seasons.map(s=>({name:s.name, progress:Number(s.progress)||0}));
+  }else{
+    // fallback: اقرأ من DOM
+    seasonsOut = Array.from(document.querySelectorAll('.progress-row .progress-label'))
+      .map(lbl=>{
+        const txt = lbl.textContent; // "Season X — 40%"
+        const [name,pct] = txt.split('—');
+        return { name: (name||'').trim(), progress: Number((pct||'0').replace(/\D/g,''))||0 };
+      });
+  }
 
   const jsonData = {
-    seasons: seasons,
+    seasons: seasonsOut,
     nextEpisode: {
-      title: document.getElementById('epTitle').textContent,
-      status: document.getElementById('epStatus').textContent,
-      folderURL: document.getElementById('epFolder').href,
-      date: localStorage.getItem('nextEpisodeDate')
+      title:  epTitleEl.textContent.trim(),
+      status: epStatusEl.textContent.trim(),
+      folderURL: epFolderEl.getAttribute('href') || '',
+      date: localStorage.getItem('nextEpisodeDate') || ''
     }
   };
 
-  const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
-    type: 'application/json'
-  });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'progress_data_updated.json';
-  link.click();
-
-  alert('📤 تم تصدير ملف progress_data_updated.json بنجاح!');
+  const blob = new Blob([JSON.stringify(jsonData,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'progress_data_updated.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  alert('📤 تم تصدير progress_data_updated.json بنجاح.');
 });
 
-// =============== الصوت / الحالة ===============
-document.querySelectorAll('button, .card').forEach(el => {
+// =============== تفعيل صوت على كل الأزرار والبطاقات ===============
+document.querySelectorAll('button,.card').forEach(el=>{
   el.addEventListener('click', playClick);
 });
 
+// =============== تفعيل بطاقات التنقل ===============
+document.querySelectorAll('.card[data-link]').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const link = card.getAttribute('data-link');
+    if(link) window.open(link,'_blank');
+  });
+});
+
 // =============== بدء التشغيل ===============
-window.onload = () => {
+window.addEventListener('load', ()=>{
   loadProgressData();
   updateCountdown();
-};
+});
