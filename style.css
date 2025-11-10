@@ -1,0 +1,118 @@
+/* === JoUTricks Dashboard Style (Final Polished Version) === */
+
+body {
+  font-family: 'Poppins', 'Cairo', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background: #1C1C1C;
+  color: #E6E6E6;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+body.light {
+  background: #F3F3F3;
+  color: #504C5B;
+}
+
+header {
+  padding: 20px;
+}
+
+.logo {
+  width: 140px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #CD980E;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-top: -5px;
+  color: inherit;
+}
+
+.tagline {
+  font-style: italic;
+  margin: 6px 0 16px;
+  color: #E6E6E6;
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+
+button,
+.card,
+.qa {
+  background: #CD980E;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 5px;
+  font-weight: 600;
+}
+
+button:hover,
+.card:hover,
+.qa:hover {
+  filter: brightness(1.2);
+  transform: scale(1.03);
+}
+
+.card {
+  display: inline-block;
+  width: 200px;
+  margin: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#bars div {
+  height: 18px;
+  background: #CD980E;
+  margin: 6px auto;
+  width: 60%;
+  border-radius: 6px;
+}
+
+#next {
+  margin: 20px auto;
+  width: 60%;
+  padding: 15px;
+  border: 1px solid #CD980E;
+  border-radius: 10px;
+  background: rgba(205,152,14,0.05);
+}
+
+#epFolder {
+  display: inline-block;
+  margin-top: 10px;
+  color: #CD980E;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#epFolder:hover {
+  text-decoration: underline;
+}
+
+#quick {
+  margin: 25px 0;
+  background: rgba(80,76,91,0.8);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+footer {
+  margin-top: 30px;
+  padding: 10px;
+  background: #504C5B;
+  color: #fff;
+  font-size: 0.9rem;
+}

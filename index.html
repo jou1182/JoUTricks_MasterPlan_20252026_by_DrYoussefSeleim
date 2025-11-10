@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JoUTricks Master Plan 2025–2026</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+  <header>
+    <img src="Media_Assets/1-0.png" class="logo" alt="JoUTricks Logo">
+    <h1>JoUTricks — YouTube Master Plan 2025-2026</h1>
+    <h2>الخطة التنفيذية لقناة JoUTricks</h2>
+    <p class="tagline">Join the journey — Learn Smart. Work Smarter.</p>
+    <div class="controls">
+      <button id="refresh">🔄 Refresh Progress</button>
+      <input type="date" id="nextDate">
+      <button id="themeToggle">🌙/☀️</button>
+    </div>
+  </header>
+
+  <section id="status">
+    <h3>📊 Project Status</h3>
+    <div id="bars"></div>
+  </section>
+
+  <section id="next">
+    <h3>📅 Next Episode: <span id="epTitle">AI in Infrastructure Projects</span></h3>
+    <p>🟡 Status: <span id="epStatus">In Production</span></p>
+    <p id="countdown"></p>
+    <a id="epFolder" target="_blank" href="#">🎥 Open Episode Folder</a>
+  </section>
+
+  <section id="nav">
+    <div class="card" data-link="Planning_Files/JoUTricks_MasterPlan_2025-2026_Bilingual.xlsx">📘 Planning Files</div>
+    <div class="card" data-link="Media_Assets/">🎬 Media Assets</div>
+    <div class="card" data-link="Integration_Templates/">⚙️ Integration Templates</div>
+    <div class="card" data-link="Reports_And_Analytics/">📊 Reports & Analytics</div>
+  </section>
+
+  <section id="quick">
+    <button class="qa" id="addEp">🆕 Add New Episode</button>
+    <button class="qa" id="updDash">📈 Update Dashboard</button>
+    <button class="qa" id="expJSON">📤 Export Progress JSON</button>
+  </section>
+
+  <footer>
+    © 2025 JoUTricks — Created by Dr. Youssef Seleim | Learn Smart. Work Smarter.
+  </footer>
+
+  <audio id="clickSound" src="click-sound.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>

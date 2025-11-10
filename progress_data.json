@@ -1,0 +1,16 @@
+{
+  "seasons": [
+    { "name": "Season 1 - Digital Transformation", "progress": 100 },
+    { "name": "Season 2 - Artificial Intelligence & Prompting", "progress": 45 },
+    { "name": "Season 3 - Data Analytics & Visualization", "progress": 20 },
+    { "name": "Season 4 - Project Management Mastery", "progress": 10 },
+    { "name": "Season 5 - Productivity & Automation Tools", "progress": 0 },
+    { "name": "Season 6 - GIS & Smart Engineering", "progress": 0 }
+  ],
+  "nextEpisode": {
+    "title": "AI in Infrastructure Projects",
+    "status": "In Production",
+    "folderURL": "https://drive.google.com/drive/folders/your-folder-id-here",
+    "date": "2025-11-10"
+  }
+}
