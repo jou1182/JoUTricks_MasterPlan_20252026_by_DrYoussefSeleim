@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JoUTricks Master Plan 2025–2026</title>
+  <title>JoUTricks — YouTube Master Plan 2025–2026</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="dark">
   <header>
-    <img src="Media_Assets/1-0.png" class="logo" alt="JoUTricks Logo">
+    <img src="1-0.png" class="logo" alt="JoUTricks Logo" />
     <h1>JoUTricks — YouTube Master Plan 2025-2026</h1>
     <h2>الخطة التنفيذية لقناة JoUTricks</h2>
     <p class="tagline">Join the journey — Learn Smart. Work Smarter.</p>
     <div class="controls">
       <button id="refresh">🔄 Refresh Progress</button>
-      <input type="date" id="nextDate">
-      <button id="themeToggle">🌙/☀️</button>
+      <input type="date" id="nextDate" />
+      <button id="themeToggle">🌙 / ☀️</button>
     </div>
   </header>
 
@@ -27,15 +28,23 @@
   <section id="next">
     <h3>📅 Next Episode: <span id="epTitle">AI in Infrastructure Projects</span></h3>
     <p>🟡 Status: <span id="epStatus">In Production</span></p>
-    <p id="countdown"></p>
+    <p id="countdown">⏳ Loading...</p>
     <a id="epFolder" target="_blank" href="#">🎥 Open Episode Folder</a>
   </section>
 
+  <!-- Navigation Cards -->
   <section id="nav">
     <div class="card" data-link="Planning_Files/JoUTricks_MasterPlan_2025-2026_Bilingual.xlsx">📘 Planning Files</div>
     <div class="card" data-link="Media_Assets/">🎬 Media Assets</div>
     <div class="card" data-link="Integration_Templates/">⚙️ Integration Templates</div>
     <div class="card" data-link="Reports_And_Analytics/">📊 Reports & Analytics</div>
+  </section>
+
+  <!-- Episodes Library Button -->
+  <section id="library" style="margin-top:10px;">
+    <button class="qa" id="openEpisodes" style="background:#CD980E;color:#fff;">
+      🎞️ Episodes Library
+    </button>
   </section>
 
   <section id="quick">
