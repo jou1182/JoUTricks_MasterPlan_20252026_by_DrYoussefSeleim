@@ -1,79 +1,91 @@
-/* === JoUTricks Dashboard Style — Final Polished v1.1 === */
+/* === JoUTricks Dashboard Style — Final v1.2 === */
 
-:root{
-  --gold:#CD980E;
-  --gold-soft:#FFD56B;
-  --gray:#504C5B;
-  --dark:#1C1C1C;
-  --light:#F3F3F3;
-  --text-dark:#E6E6E6;
-  --text-light:#504C5B;
+:root {
+  --gold: #CD980E;
+  --gold-soft: #FFD56B;
+  --gray: #504C5B;
+  --dark: #1C1C1C;
+  --light: #F3F3F3;
+  --text-dark: #E6E6E6;
+  --text-light: #504C5B;
 }
 
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
 
-body{
-  font-family:'Poppins','Cairo',sans-serif;
-  margin:0; padding:0; text-align:center;
-  background:var(--dark); color:var(--text-dark);
-  transition:background .4s ease,color .4s ease;
+body {
+  font-family: 'Poppins', 'Cairo', sans-serif;
+  margin: 0; padding: 0; text-align: center;
+  background: var(--dark); color: var(--text-dark);
+  transition: background .4s ease, color .4s ease;
 }
 
-body.light{ background:var(--light); color:var(--text-light); }
+body.light { background: var(--light); color: var(--text-light); }
 
-header{ padding:20px 12px; }
+header { padding: 20px 12px; }
+.logo { width: 140px; margin: 0 auto 8px; display: block; }
 
-.logo{ width:140px; margin:0 auto 8px; display:block; }
+h1 { font-size: 1.9rem; margin: 6px 0; color: var(--gold); }
+h2 { font-size: 1.1rem; margin: 0 0 8px 0; }
+.tagline { font-style: italic; opacity: .85; margin: 6px 0 16px; }
 
-h1{ font-size:1.9rem; margin:6px 0; color:var(--gold); }
-h2{ font-size:1.1rem; margin:0 0 8px 0; }
-.tagline{ font-style:italic; opacity:.85; margin:6px 0 16px; }
-
-.controls{ display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin-bottom:18px; }
-.controls input[type="date"]{ padding:8px 10px; border-radius:8px; border:1px solid var(--gray); background:transparent; color:inherit; }
-
-button,.card,.qa{
-  background:var(--gold); border:none; color:#fff;
-  padding:10px 18px; border-radius:10px; cursor:pointer;
-  transition:.25s; font-weight:600; box-shadow:0 2px 6px rgba(0,0,0,.25);
+.controls {
+  display: flex; gap: 8px; justify-content: center; align-items: center;
+  flex-wrap: wrap; margin-bottom: 18px;
 }
-button:hover,.card:hover,.qa:hover{ filter:brightness(1.15); transform:translateY(-1px); }
-
-#nav{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin:14px 0 18px; }
-.card{ display:inline-block; min-width:210px; }
-
-#quick{ margin:18px 0; background:rgba(80,76,91,.7); padding:14px; border-radius:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-
-/* —— Project Status Section —— */
-#status h3{ margin:8px 0; }
-#bars{
-  display:flex; flex-direction:column; align-items:center;
-  gap:10px; margin:10px 0 6px;
+.controls input[type="date"] {
+  padding: 8px 10px; border-radius: 8px; border: 1px solid var(--gray);
+  background: transparent; color: inherit;
 }
 
-.progress-row{ width:72%; max-width:920px; text-align:left; }
-.progress-label{ font-weight:700; margin:0 0 5px; color:var(--gold); font-size:.95rem; }
-.progress-bar{
-  height:18px; border-radius:9px;
-  background:linear-gradient(90deg,var(--gold),var(--gold-soft));
-  box-shadow:0 1px 4px rgba(0,0,0,.3);
-  width:0%;
-  transition:width .6s ease;
+button, .card, .qa {
+  background: var(--gold); border: none; color: #fff;
+  padding: 10px 18px; border-radius: 10px; cursor: pointer;
+  transition: .25s; font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+button:hover, .card:hover, .qa:hover {
+  filter: brightness(1.15); transform: translateY(-1px);
 }
 
-/* —— Next Episode box —— */
-#next{
-  margin:18px auto; width:72%; max-width:920px; padding:15px 18px;
-  border:1px solid var(--gold); border-radius:12px;
-  background:rgba(205,152,14,.06);
+#nav { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 14px 0 18px; }
+.card { display: inline-block; min-width: 210px; }
+
+#quick {
+  margin: 18px 0; background: rgba(80,76,91,.7);
+  padding: 14px; border-radius: 12px;
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
 }
-#epFolder{ display:inline-block; margin-top:8px; color:var(--gold); text-decoration:none; font-weight:700; }
-#epFolder:hover{ text-decoration:underline; }
-#countdown{ margin:6px 0; font-weight:700; }
+
+/* Project Status Section */
+#status h3 { margin: 8px 0; }
+#bars {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; margin: 10px 0 6px;
+}
+
+.progress-row { width: 72%; max-width: 920px; text-align: left; }
+.progress-label { font-weight: 700; margin: 0 0 5px; color: var(--gold); font-size: .95rem; }
+.progress-bar {
+  height: 18px; border-radius: 9px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+  box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  width: 0%; transition: width .6s ease;
+}
+
+/* Next Episode box */
+#next {
+  margin: 18px auto; width: 72%; max-width: 920px; padding: 15px 18px;
+  border: 1px solid var(--gold); border-radius: 12px;
+  background: rgba(205,152,14,.06);
+}
+#epFolder { display: inline-block; margin-top: 8px; color: var(--gold);
+  text-decoration: none; font-weight: 700; }
+#epFolder:hover { text-decoration: underline; }
+#countdown { margin: 6px 0; font-weight: 700; }
 
 /* Footer */
-footer{ margin-top:24px; padding:10px; background:var(--gray); color:#fff; font-size:.92rem; }
-
-/* Light mode tweaks */
-body.light #quick{ background:rgba(80,76,91,.15); }
-body.light #next{ background:rgba(205,152,14,.08); }
+footer {
+  margin-top: 24px; padding: 10px; background: var(--gray);
+  color: #fff; font-size: .92rem;
+}
+body.light #quick { background: rgba(80,76,91,.15); }
+body.light #next { background: rgba(205,152,14,.08); }
