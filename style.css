@@ -1,118 +1,79 @@
-/* === JoUTricks Dashboard Style (Final Polished Version) === */
+/* === JoUTricks Dashboard Style — Final Polished v1.1 === */
 
-body {
-  font-family: 'Poppins', 'Cairo', sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  background: #1C1C1C;
-  color: #E6E6E6;
-  transition: background 0.4s ease, color 0.4s ease;
+:root{
+  --gold:#CD980E;
+  --gold-soft:#FFD56B;
+  --gray:#504C5B;
+  --dark:#1C1C1C;
+  --light:#F3F3F3;
+  --text-dark:#E6E6E6;
+  --text-light:#504C5B;
 }
 
-body.light {
-  background: #F3F3F3;
-  color: #504C5B;
+*{box-sizing:border-box}
+
+body{
+  font-family:'Poppins','Cairo',sans-serif;
+  margin:0; padding:0; text-align:center;
+  background:var(--dark); color:var(--text-dark);
+  transition:background .4s ease,color .4s ease;
 }
 
-header {
-  padding: 20px;
+body.light{ background:var(--light); color:var(--text-light); }
+
+header{ padding:20px 12px; }
+
+.logo{ width:140px; margin:0 auto 8px; display:block; }
+
+h1{ font-size:1.9rem; margin:6px 0; color:var(--gold); }
+h2{ font-size:1.1rem; margin:0 0 8px 0; }
+.tagline{ font-style:italic; opacity:.85; margin:6px 0 16px; }
+
+.controls{ display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin-bottom:18px; }
+.controls input[type="date"]{ padding:8px 10px; border-radius:8px; border:1px solid var(--gray); background:transparent; color:inherit; }
+
+button,.card,.qa{
+  background:var(--gold); border:none; color:#fff;
+  padding:10px 18px; border-radius:10px; cursor:pointer;
+  transition:.25s; font-weight:600; box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+button:hover,.card:hover,.qa:hover{ filter:brightness(1.15); transform:translateY(-1px); }
+
+#nav{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin:14px 0 18px; }
+.card{ display:inline-block; min-width:210px; }
+
+#quick{ margin:18px 0; background:rgba(80,76,91,.7); padding:14px; border-radius:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+
+/* —— Project Status Section —— */
+#status h3{ margin:8px 0; }
+#bars{
+  display:flex; flex-direction:column; align-items:center;
+  gap:10px; margin:10px 0 6px;
 }
 
-.logo {
-  width: 140px;
-  margin-bottom: 10px;
+.progress-row{ width:72%; max-width:920px; text-align:left; }
+.progress-label{ font-weight:700; margin:0 0 5px; color:var(--gold); font-size:.95rem; }
+.progress-bar{
+  height:18px; border-radius:9px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+  box-shadow:0 1px 4px rgba(0,0,0,.3);
+  width:0%;
+  transition:width .6s ease;
 }
 
-h1 {
-  font-size: 1.8rem;
-  color: #CD980E;
+/* —— Next Episode box —— */
+#next{
+  margin:18px auto; width:72%; max-width:920px; padding:15px 18px;
+  border:1px solid var(--gold); border-radius:12px;
+  background:rgba(205,152,14,.06);
 }
+#epFolder{ display:inline-block; margin-top:8px; color:var(--gold); text-decoration:none; font-weight:700; }
+#epFolder:hover{ text-decoration:underline; }
+#countdown{ margin:6px 0; font-weight:700; }
 
-h2 {
-  font-size: 1.2rem;
-  margin-top: -5px;
-  color: inherit;
-}
+/* Footer */
+footer{ margin-top:24px; padding:10px; background:var(--gray); color:#fff; font-size:.92rem; }
 
-.tagline {
-  font-style: italic;
-  margin: 6px 0 16px;
-  color: #E6E6E6;
-}
-
-.controls {
-  margin-bottom: 20px;
-}
-
-button,
-.card,
-.qa {
-  background: #CD980E;
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin: 5px;
-  font-weight: 600;
-}
-
-button:hover,
-.card:hover,
-.qa:hover {
-  filter: brightness(1.2);
-  transform: scale(1.03);
-}
-
-.card {
-  display: inline-block;
-  width: 200px;
-  margin: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-#bars div {
-  height: 18px;
-  background: #CD980E;
-  margin: 6px auto;
-  width: 60%;
-  border-radius: 6px;
-}
-
-#next {
-  margin: 20px auto;
-  width: 60%;
-  padding: 15px;
-  border: 1px solid #CD980E;
-  border-radius: 10px;
-  background: rgba(205,152,14,0.05);
-}
-
-#epFolder {
-  display: inline-block;
-  margin-top: 10px;
-  color: #CD980E;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-#epFolder:hover {
-  text-decoration: underline;
-}
-
-#quick {
-  margin: 25px 0;
-  background: rgba(80,76,91,0.8);
-  padding: 15px;
-  border-radius: 10px;
-}
-
-footer {
-  margin-top: 30px;
-  padding: 10px;
-  background: #504C5B;
-  color: #fff;
-  font-size: 0.9rem;
-}
+/* Light mode tweaks */
+body.light #quick{ background:rgba(80,76,91,.15); }
+body.light #next{ background:rgba(205,152,14,.08); }
